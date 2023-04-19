@@ -1,0 +1,38 @@
+Apr 18 11:30:28 ip-172-31-5-187 crond[2198]: (CRON) INFO (RANDOM_DELAY will be scaled with factor 88% if used.)
+Apr 18 11:30:28 ip-172-31-5-187 crond[2198]: (CRON) INFO (running with inotify support)
+Apr 18 11:40:01 ip-172-31-5-187 CROND[2833]: (root) CMD (/usr/lib64/sa/sa1 1 1)
+Apr 18 11:50:01 ip-172-31-5-187 CROND[2917]: (root) CMD (/usr/lib64/sa/sa1 1 1)
+Apr 18 11:50:01 ip-172-31-5-187 CROND[2918]: (root) CMD (/opt/elasticbeanstalk/bin/publishlogs -type publish)
+Apr 18 12:00:01 ip-172-31-5-187 CROND[3055]: (root) CMD (/usr/lib64/sa/sa1 1 1)
+Apr 18 12:01:01 ip-172-31-5-187 CROND[3073]: (root) CMD (run-parts /etc/cron.hourly)
+Apr 18 12:01:01 ip-172-31-5-187 run-parts(/etc/cron.hourly)[3073]: starting 0anacron
+Apr 18 12:01:01 ip-172-31-5-187 anacron[3083]: Anacron started on 2023-04-18
+Apr 18 12:01:01 ip-172-31-5-187 anacron[3083]: Will run job `cron.daily' in 14 min.
+Apr 18 12:01:01 ip-172-31-5-187 anacron[3083]: Will run job `cron.weekly' in 34 min.
+Apr 18 12:01:01 ip-172-31-5-187 anacron[3083]: Will run job `cron.monthly' in 54 min.
+Apr 18 12:01:01 ip-172-31-5-187 anacron[3083]: Jobs will be executed sequentially
+Apr 18 12:01:01 ip-172-31-5-187 run-parts(/etc/cron.hourly)[3085]: finished 0anacron
+Apr 18 12:01:01 ip-172-31-5-187 run-parts(/etc/cron.hourly)[3073]: starting cron.logcleanup.elasticbeanstalk.healthd-proxy.conf
+Apr 18 12:01:01 ip-172-31-5-187 run-parts(/etc/cron.hourly)[3096]: finished cron.logcleanup.elasticbeanstalk.healthd-proxy.conf
+Apr 18 12:01:01 ip-172-31-5-187 run-parts(/etc/cron.hourly)[3073]: starting cron.logrotate.elasticbeanstalk.eb-engine.conf
+Apr 18 12:01:01 ip-172-31-5-187 run-parts(/etc/cron.hourly)[3103]: finished cron.logrotate.elasticbeanstalk.eb-engine.conf
+Apr 18 12:01:01 ip-172-31-5-187 run-parts(/etc/cron.hourly)[3073]: starting cron.logrotate.elasticbeanstalk.eb-hooks.conf
+Apr 18 12:01:01 ip-172-31-5-187 run-parts(/etc/cron.hourly)[3110]: finished cron.logrotate.elasticbeanstalk.eb-hooks.conf
+Apr 18 12:01:01 ip-172-31-5-187 run-parts(/etc/cron.hourly)[3073]: starting cron.logrotate.elasticbeanstalk.healthd.conf
+Apr 18 12:01:01 ip-172-31-5-187 run-parts(/etc/cron.hourly)[3117]: finished cron.logrotate.elasticbeanstalk.healthd.conf
+Apr 18 12:01:01 ip-172-31-5-187 run-parts(/etc/cron.hourly)[3073]: starting cron.logrotate.elasticbeanstalk.nginx.conf
+Apr 18 12:01:01 ip-172-31-5-187 run-parts(/etc/cron.hourly)[3124]: finished cron.logrotate.elasticbeanstalk.nginx.conf
+Apr 18 12:01:01 ip-172-31-5-187 run-parts(/etc/cron.hourly)[3073]: starting cron.logrotate.elasticbeanstalk.web-stderr.conf
+Apr 18 12:01:01 ip-172-31-5-187 run-parts(/etc/cron.hourly)[3131]: finished cron.logrotate.elasticbeanstalk.web-stderr.conf
+Apr 18 12:01:01 ip-172-31-5-187 run-parts(/etc/cron.hourly)[3073]: starting cron.logrotate.elasticbeanstalk.web-stdout.conf
+Apr 18 12:01:01 ip-172-31-5-187 run-parts(/etc/cron.hourly)[3138]: finished cron.logrotate.elasticbeanstalk.web-stdout.conf
+Apr 18 12:10:01 ip-172-31-5-187 CROND[3206]: (root) CMD (/usr/lib64/sa/sa1 1 1)
+Apr 18 12:10:01 ip-172-31-5-187 CROND[3207]: (root) CMD (/opt/elasticbeanstalk/bin/publishlogs -type publish)
+Apr 18 12:15:01 ip-172-31-5-187 anacron[3083]: Job `cron.daily' started
+Apr 18 12:15:01 ip-172-31-5-187 run-parts(/etc/cron.daily)[3255]: starting logrotate
+Apr 18 12:15:01 ip-172-31-5-187 run-parts(/etc/cron.daily)[3263]: finished logrotate
+Apr 18 12:15:01 ip-172-31-5-187 run-parts(/etc/cron.daily)[3255]: starting man-db.cron
+Apr 18 12:15:14 ip-172-31-5-187 run-parts(/etc/cron.daily)[30226]: finished man-db.cron
+Apr 18 12:15:14 ip-172-31-5-187 run-parts(/etc/cron.daily)[3255]: starting mlocate
+Apr 18 12:15:15 ip-172-31-5-187 run-parts(/etc/cron.daily)[30238]: finished mlocate
+Apr 18 12:15:15 ip-172-31-5-187 anacron[3083]: Job `cron.daily' terminated
