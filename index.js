@@ -10,7 +10,7 @@ var mongoose = require('mongoose');
 var userModel = require('./models/user');
 
 const KEY = process.env.KEY;
-const dburi = process.env.DBURI;
+const dburi = process.env.DBURI ;
 const signature = {
   signed: KEY,
   maxAge: 2 * 24 * 60 * 60 * 1000,
@@ -25,8 +25,15 @@ mongoose.connect(
   dburi,
   { useNewUrlParser: true, useCreateIndex: true },
   (err) => {
-    if (err) throw err;
-    else console.log('Connected to mongoDb');
+    if (err) {
+      console.error('Failed to connect to MongoDB:', err);
+    } else {
+      console.log('Connected to MongoDB');
+      // Start the server only after the database connection is established
+      app.listen(port, () => {
+        console.log('App listening on port ' + port + '!');
+      });
+    }
   }
 );
 
