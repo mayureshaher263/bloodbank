@@ -23,20 +23,12 @@ app.use(morgan('dev'));
 
 mongoose.connect(
   dburi,
-  { useNewUrlParser: true, useCreateIndex: true, bufferMaxEntries: 5 },
+  { useNewUrlParser: true, useCreateIndex: true },
   (err) => {
-    if (err) {
-      console.error('Failed to connect to MongoDB:', err);
-    } else {
-      console.log('Connected to MongoDB');
-      // Start the server only after the database connection is established
-      app.listen(port, () => {
-        console.log('App listening on port ' + port + '!');
-      });
-    }
+    if (err) throw err;
+    else console.log('Connected to mongoDb');
   }
 );
-
 
 app.use(express.static('public/js'));
 app.use(express.static('public/css'));
@@ -199,7 +191,7 @@ app.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
-const server = app.listen(0, () => {
-  const port = server.address().port;
+var port = process.env.PORT || 3000;
+app.listen(port, () => {
   console.log('App listening on port ' + port + '!');
 });
