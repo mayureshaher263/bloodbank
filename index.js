@@ -23,7 +23,7 @@ app.use(morgan('dev'));
 
 mongoose.connect(
   dburi,
-  { useNewUrlParser: true, useCreateIndex: true },
+  { useNewUrlParser: true, useCreateIndex: true, bufferMaxEntries: 5 },
   (err) => {
     if (err) {
       console.error('Failed to connect to MongoDB:', err);
@@ -36,6 +36,7 @@ mongoose.connect(
     }
   }
 );
+
 
 app.use(express.static('public/js'));
 app.use(express.static('public/css'));
