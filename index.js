@@ -1,16 +1,16 @@
 require('dotenv').config();
-const debug = require('debug')('http');
-const morgan = require('morgan');
-const express = require('express');
-const bodyParser = require('body-parser');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const app = express();
-const mongoose = require('mongoose');
-const userModel = require('./models/user');
+var debug = require('debug')('http');
+var morgan = require('morgan');
+var express = require('express');
+var bodyParser = require('body-parser');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var app = express();
+var mongoose = require('mongoose');
+var userModel = require('./models/user');
 
 const KEY = process.env.KEY;
-const dbUrl = process.env.DBURI;
+const dburi = process.env.DBURI ;
 const signature = {
   signed: KEY,
   maxAge: 2 * 24 * 60 * 60 * 1000,
@@ -22,19 +22,21 @@ const escapeRegExp = (string) => {
 app.use(morgan('dev'));
 
 mongoose.connect(
-  dbUrl,
+  dburi,
   { useNewUrlParser: true, useCreateIndex: true, bufferMaxEntries: 5 },
   (err) => {
     if (err) {
       console.error('Failed to connect to MongoDB:', err);
     } else {
       console.log('Connected to MongoDB');
+      // Start the server only after the database connection is established
       app.listen(port, () => {
         console.log('App listening on port ' + port + '!');
       });
     }
   }
 );
+
 
 app.use(express.static('public/js'));
 app.use(express.static('public/css'));
@@ -62,7 +64,7 @@ app.post('/register', (req, res) => {
   userModel
     .findOne({ phone: req.body.phone })
     .then((user) => {
-      if (!user) {
+      if (user == null) {
         new userModel({
           name: req.body.name.toUpperCase(),
           bloodGroup: req.body.blood.toUpperCase() + req.body.rh,
@@ -77,7 +79,7 @@ app.post('/register', (req, res) => {
             res.redirect('/donate');
           })
           .catch((err) => {
-            res.send(err.message + '\nPlease go back and try again.');
+            res.send(err.message + '\nPlease go Back and try again.');
           });
       } else {
         res.cookie('user', user.phone, signature);
@@ -98,7 +100,7 @@ app.post('/donate', (req, res) => {
     if (err) res.send(err);
     if (!user) {
       res.redirect('/logout');
-      console.error('Unexpected error occurred.');
+      console.error('WTF should not happen.');
       return;
     }
     user.amount += parseFloat(req.body.amount);
@@ -116,20 +118,28 @@ app.post('/donate', (req, res) => {
 app.get('/donate', (req, res) => {
   debug(req.signedCookies.user);
   if (req.signedCookies.user) {
+    // Greet user and Ask how much to donate
     userModel
       .findOne({ phone: req.signedCookies.user })
       .then((user) => {
-        if (!user) {
-          console.error('Unexpected error occurred.');
+        if (user == null) {
+          // Should not happen
+          console.error('WTF should not happen.');
           res.redirect('/logout');
         } else {
-          debug(user.createdAt, user.updatedAt, user.createdAt - user.updatedAt);
+          debug(
+            user.createdAt,
+            user.updatedAt,
+            user.createdAt - user.updatedAt
+          );
           res.render('donate', {
             user: {
               name: user.name,
               amount: user.amount,
               lastDonated:
-                user.createdAt - user.updatedAt == 0 ? 'Never.' : user.updatedAt,
+                user.createdAt - user.updatedAt == 0
+                  ? 'Never.'
+                  : user.updatedAt,
             },
           });
         }
@@ -144,22 +154,23 @@ app.get('/donate', (req, res) => {
 });
 
 app.get('/bank', (req, res) => {
-  if (!req.signedCookies.user) {
+  if (req.signedCookies.user == null) {
     res.redirect('/register');
     return;
   }
 
-  if (!req.query.blood || req.query.blood === '') req.query.blood = '(A|B|O|AB)';
+  if (req.query.blood == undefined || req.query.blood == '')
+    req.query.blood = '(A|B|O|AB)';
 
-  if (req.query.rh) req.query.blood += escapeRegExp(req.query.rh);
+  if (req.query.rh != undefined) req.query.blood += escapeRegExp(req.query.rh);
   else req.query.blood += '[\\+-]';
 
-  if (!req.query.city) req.query.city = '';
+  if (req.query.city == undefined) req.query.city = '';
 
-  let page = req.query.page;
-  if (!page || page < 1) page = 1;
+  var page = req.query.page;
+  if (page === undefined || page < 1) page = 1;
 
-  const query = {
+  var query = {
     $and: [
       { bloodGroup: { $regex: req.query.blood, $options: 'i' } },
       { city: { $regex: req.query.city, $options: 'i' } },
@@ -176,7 +187,7 @@ app.get('/bank', (req, res) => {
       limit: 18,
       skip: (page - 1) * 18,
     },
-    (err, docs) => {
+    function (err, docs) {
       if (err) res.send(err);
       res.render('bank', { docs: docs, logged: req.signedCookies.user });
     }
@@ -188,7 +199,7 @@ app.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
-const port = process.env.PORT || 4000;
-app.listen(port, () => {
+const server = app.listen(0, () => {
+  const port = server.address().port;
   console.log('App listening on port ' + port + '!');
 });
